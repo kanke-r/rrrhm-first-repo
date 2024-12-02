@@ -30,7 +30,7 @@ public class TeachersPanel extends JFrame implements ActionListener {
 		super("ΩÃ ¶");
 		this.idd = idd;
 		setLocation(300, 200);
-		setSize(300, 340);
+		setSize(300, 400);
 		contain = new JPanel();
 		contain.setLayout(null);
 		add(contain);
