@@ -1,5 +1,8 @@
 package controller;
 
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -7,18 +10,21 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
+import javax.swing.*;
+import java.util.HashMap;
+import java.util.Map;
 
 @SuppressWarnings("serial")
-public class CourseView extends JFrame {
+public class CourseView extends JFrame implements ActionListener {
 	/*
 	 * 学生查询课程，教师查询所教授课程
 	 */
 	
 	JPanel contain;
 	JTextArea list;
+	JButton searchCourse;
+	HashMap dictionary;
+
 	
 	public CourseView(String id, int flag) {
 		super("课程");
@@ -27,13 +33,23 @@ public class CourseView extends JFrame {
 		setLocation(600, 400);
 		list = new JTextArea();
 		list.setEditable(false);
-		contain.add(list);
+		contain.setLayout(new BorderLayout()); // 使用 BorderLayout布局管理器
 		list.append("课程编号\t课程名\t学分\t学时\n");
+
+		// 将 JTextArea 放入 JScrollPane 中，以便支持滚动
+		JScrollPane scrollPane = new JScrollPane(list);
+		contain.add(scrollPane, BorderLayout.CENTER); // 将 JTextArea 添加到 CENTER 区域
+
+		searchCourse = new JButton("查询特定课程");
+		contain.add(searchCourse, BorderLayout.SOUTH); // 将按钮添加到 SOUTH 区域
+		searchCourse.addActionListener(this);
 		
 		String courseid;
 		String coursename;
 		String credit = null;
 		String classhour = null;
+		// 创建一个 HashMap 实例
+		dictionary = new HashMap<>();
 		
 		if(flag == 0){   // 学生查询课程
 			
@@ -63,7 +79,7 @@ public class CourseView extends JFrame {
 						if (result[2].equals(id)) {      // 学生学号相等时
 							courseid = result[0];
 							coursename = result[1];
-							
+							dictionary.put(courseid, coursename);
 
 							String path1 = System.getProperty("user.dir")+"/data/course.txt";
 							BufferedReader br1 = new BufferedReader(
@@ -106,6 +122,8 @@ public class CourseView extends JFrame {
 						coursename = result[1];
 						credit = result[2];
 	            		classhour = result[3];
+						//含有这门课程
+						dictionary.put(courseid, result);
 	            		
 	            		list.append(courseid + "\t");
 						list.append(coursename + "\t");
@@ -120,10 +138,18 @@ public class CourseView extends JFrame {
 				e.printStackTrace();
 			}
 		}
-		
 
-		
 		add(contain);
 		setVisible(true);
 	}
+
+	//如果触发按钮则进行特定搜索
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == searchCourse) {
+			//查询信息
+			new Search("course",dictionary);
+		}
+	}
 }
+
+

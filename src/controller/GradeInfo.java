@@ -1,20 +1,23 @@
 package controller;
 
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
+import java.util.List;
+import javax.swing.*;
 
-public class GradeInfo extends JFrame { 
+public class GradeInfo extends JFrame implements ActionListener {
 	/**
 	 * 学生根据学号查询所有成绩
 	 */
 	private static final long serialVersionUID = 1L;
 	JPanel contain;
 	JTextArea list;
+	JButton searchGrade;
 	String id;
 
 	String courseid;
@@ -24,6 +27,7 @@ public class GradeInfo extends JFrame {
 	String studentid;
 	String studentname;
 	String grade;
+	HashMap map;
 	
 
 	public GradeInfo(String id) {
@@ -31,6 +35,7 @@ public class GradeInfo extends JFrame {
 		this.id = id;
 		setSize(600, 400);
 		contain = new JPanel();
+		contain.setLayout(new BorderLayout()); // 使用 BorderLayout布局管理器
 		setLocation(600, 400);
 		list = new JTextArea();
 		list.setEditable(false);
@@ -43,6 +48,16 @@ public class GradeInfo extends JFrame {
 		list.append("学号" + "\t");
 		list.append("学生姓名" + "\t");
 		list.append("成绩" + "\n");
+
+		// 将 JTextArea 放入 JScrollPane 中，以便支持滚动
+		JScrollPane scrollPane = new JScrollPane(list);
+		contain.add(scrollPane, BorderLayout.CENTER); // 将 JTextArea 添加到 CENTER 区域
+		searchGrade = new JButton("查询特定课程");
+		contain.add(searchGrade, BorderLayout.SOUTH); // 将按钮添加到 SOUTH 区域
+		searchGrade.addActionListener(this);
+
+		//初始化字典
+		 map = new HashMap<String,String[]>();
 
 		// String path = "D://test//grade";
 		String path = System.getProperty("user.dir")+"/data/grade";
@@ -77,6 +92,7 @@ public class GradeInfo extends JFrame {
 						studentid = result[4];
 						studentname = result[5];
 						grade = result[6];
+						map.put(result[0], result);
 
 						list.append(courseid + "\t");
 						list.append(coursename + "\t");
@@ -96,5 +112,12 @@ public class GradeInfo extends JFrame {
 		add(contain);
 		setVisible(true);
 
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == searchGrade) {
+			//查询信息
+			new Search("grade",map);
+		}
 	}
 }
