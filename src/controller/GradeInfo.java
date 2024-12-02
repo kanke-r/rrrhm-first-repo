@@ -17,8 +17,9 @@ public class GradeInfo extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	JPanel contain;
 	JTextArea list;
-	JButton searchGrade;
+	JButton searchGrade,appealGrade;
 	String id;
+
 
 	String courseid;
 	String coursename;
@@ -53,8 +54,15 @@ public class GradeInfo extends JFrame implements ActionListener {
 		JScrollPane scrollPane = new JScrollPane(list);
 		contain.add(scrollPane, BorderLayout.CENTER); // 将 JTextArea 添加到 CENTER 区域
 		searchGrade = new JButton("查询特定课程");
-		contain.add(searchGrade, BorderLayout.SOUTH); // 将按钮添加到 SOUTH 区域
+		appealGrade = new JButton("成绩申诉");
+		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		buttonPanel.add(searchGrade);
+		buttonPanel.add(appealGrade);
+
+		// 将面板添加到 SOUTH 区域
+		contain.add(buttonPanel, BorderLayout.SOUTH);
 		searchGrade.addActionListener(this);
+		appealGrade.addActionListener(this);
 
 		//初始化字典
 		 map = new HashMap<String,String[]>();
@@ -118,6 +126,8 @@ public class GradeInfo extends JFrame implements ActionListener {
 		if (e.getSource() == searchGrade) {
 			//查询信息
 			new Search("grade",map);
+		}else if (e.getSource()==appealGrade) {
+			new GradeAppeal(map);
 		}
 	}
 }
