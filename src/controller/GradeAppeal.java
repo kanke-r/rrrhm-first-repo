@@ -115,7 +115,7 @@ public class GradeAppeal extends JFrame implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             if (e.getSource()==submit) {
                 if (!gradeMap.containsKey(courseidField.getText())) {
-                    JOptionPane.showMessageDialog(null, "这门课程不在你的范围内！", "提示", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "这门课程不在你的范围内或者该门课还未公布成绩！", "提示", JOptionPane.INFORMATION_MESSAGE);
                 }else if (appealMap.containsKey(courseidField.getText())) {
                     JOptionPane.showMessageDialog(null, "你已经提交过这门课程的申诉", "提示", JOptionPane.INFORMATION_MESSAGE);
                 }else{

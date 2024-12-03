@@ -61,7 +61,6 @@ public class GradeEnter extends JFrame implements ActionListener {
 		if (e.getSource() == submit) {
 			if (hasThisCourse(idt.getText()) == 1) {
 				enter();   // 进入成绩输入界面
-				
 			} else {
 				JOptionPane.showMessageDialog(null, "您未开设此课程！", "提示", JOptionPane.INFORMATION_MESSAGE);
 			}
@@ -247,7 +246,7 @@ public class GradeEnter extends JFrame implements ActionListener {
 		
 	}
 
-	int hasThisCourse(String idd) {
+	int hasThisCourse(String idt) {
 		
 		String file = System.getProperty("user.dir")+"/data/course.txt";
 		// String file = "D://test//course.txt";
@@ -256,7 +255,7 @@ public class GradeEnter extends JFrame implements ActionListener {
             String s = null;
             while((s = br.readLine())!=null){//使用readLine方法，一次读一行
             	String[] result = s.split(" ");
-            	if(result[0].equals(idd)){
+            	if(result[4].equals(idd)&&result[0].equals(idt)){
             		return 1;
             	}
             }
