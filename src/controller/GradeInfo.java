@@ -55,10 +55,9 @@ public class GradeInfo extends JFrame implements ActionListener {
 		contain.add(scrollPane, BorderLayout.CENTER); // 将 JTextArea 添加到 CENTER 区域
 		searchGrade = new JButton("查询特定课程");
 		appealGrade = new JButton("成绩申诉");
-		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		buttonPanel.add(searchGrade);
 		buttonPanel.add(appealGrade);
-
 		// 将面板添加到 SOUTH 区域
 		contain.add(buttonPanel, BorderLayout.SOUTH);
 		searchGrade.addActionListener(this);
@@ -127,7 +126,8 @@ public class GradeInfo extends JFrame implements ActionListener {
 			//查询信息
 			new Search("grade",map);
 		}else if (e.getSource()==appealGrade) {
-			new GradeAppeal(map);
+			new GradeAppeal(map,id);
+			setVisible(false);
 		}
 	}
 }
