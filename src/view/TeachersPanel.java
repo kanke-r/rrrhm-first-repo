@@ -17,16 +17,16 @@ public class TeachersPanel extends JFrame implements ActionListener {
 	/*
 	 * 教师登陆后操作主界面
 	 */
-	
+
 	String idd;
 	JPanel contain;
-	JButton infoButton, gradeButton, courseButton, editButton, courseView, sortGrade,appealHandler;
+	JButton infoButton, gradeButton, courseButton, editButton, courseView, sortGrade,appealHandler, backButton;
 
 	public TeachersPanel(String idd) {
 		super("教师");
 		this.idd = idd;
 		setLocation(300, 200);
-		setSize(300, 400);
+		setSize(300, 440);
 		contain = new JPanel();
 		contain.setLayout(null);
 		add(contain);
@@ -36,9 +36,8 @@ public class TeachersPanel extends JFrame implements ActionListener {
 		editButton = new JButton("修改信息");
 		courseView = new JButton("开课");
 		appealHandler = new JButton("反馈学生申诉");
-		
 		sortGrade = new JButton("成绩统计");
-		
+		backButton = new JButton("返回登录");
 		infoButton.setBounds(70, 40, 140, 30);
 		editButton.setBounds(70, 80, 140, 30);
 		courseView.setBounds(70, 120, 140, 30);
@@ -46,7 +45,7 @@ public class TeachersPanel extends JFrame implements ActionListener {
 		gradeButton.setBounds(70, 200, 140, 30);
 		sortGrade.setBounds(70, 240, 140, 30);
 		appealHandler.setBounds(70, 280, 140, 30);
-		
+		backButton.setBounds(70, 320, 140, 30);
 		contain.add(infoButton);
 		infoButton.addActionListener(this);
 		contain.add(gradeButton);
@@ -59,11 +58,13 @@ public class TeachersPanel extends JFrame implements ActionListener {
 		editButton.addActionListener(this);
 		contain.add(appealHandler);
 		appealHandler.addActionListener(this);
-		
+
 		contain.add(sortGrade);
 		sortGrade.addActionListener(this);
-		
-		
+
+		contain.add(backButton);
+		backButton.addActionListener(this);
+
 		setVisible(true);
 		enableEvents(AWTEvent.WINDOW_EVENT_MASK);
 	}
@@ -96,6 +97,10 @@ public class TeachersPanel extends JFrame implements ActionListener {
 		if(e.getSource() == appealHandler){
 			//处理成绩反馈
 			new AppealHandler(idd);
+		}
+		if (e.getSource() == backButton) {
+			this.dispose();   // 销毁当前教师面板窗口
+			new MainFrame();//返回登录
 		}
 	}
 

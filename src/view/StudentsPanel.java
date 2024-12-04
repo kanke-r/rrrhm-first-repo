@@ -23,13 +23,13 @@ public class StudentsPanel extends JFrame implements ActionListener {
 	 */
 	JPanel contain;
 	String id;
-	JButton infoButton, gradeButton, courseButton, editButton;
+	JButton infoButton, gradeButton, courseButton, editButton,backButton;
 
 	public StudentsPanel(String id) {
 		super("学生");
 		this.id = id;
 		setLocation(300, 200);
-		setSize(300, 340);
+		setSize(300, 380);
 		contain = new JPanel();
 		contain.setLayout(null);
 		add(contain);
@@ -37,10 +37,12 @@ public class StudentsPanel extends JFrame implements ActionListener {
 		gradeButton = new JButton("成绩查询");
 		courseButton = new JButton("课程查询");
 		editButton = new JButton("修改信息");
+		backButton = new JButton("返回登录");
 		infoButton.setBounds(70, 40, 140, 30);
 		gradeButton.setBounds(70, 80, 140, 30);
 		courseButton.setBounds(70, 120, 140, 30);
 		editButton.setBounds(70, 160, 140, 30);
+		backButton.setBounds(70, 200, 140, 30); // 设置返回按钮的位置
 		contain.add(infoButton);
 		infoButton.addActionListener(this);
 		contain.add(gradeButton);
@@ -49,6 +51,8 @@ public class StudentsPanel extends JFrame implements ActionListener {
 		courseButton.addActionListener(this);
 		contain.add(editButton);
 		editButton.addActionListener(this);
+		contain.add(backButton); // 添加返回按钮
+		backButton.addActionListener(this);
 		setVisible(true);
 		enableEvents(AWTEvent.WINDOW_EVENT_MASK);
 	}
@@ -70,6 +74,10 @@ public class StudentsPanel extends JFrame implements ActionListener {
 		if (e.getSource() == editButton) {
 			//修改信息
 			new EditInfo(id, 0);
+		}
+		if (e.getSource() == backButton) {
+			this.dispose();  // 销毁当前学生面板窗口
+			new MainFrame();  // 返回到登录界面
 		}
 	}
 	//关闭窗口
